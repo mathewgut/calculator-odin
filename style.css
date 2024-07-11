@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-height: 600px;
+    max-width: 500px;
+    border: 2px solid black;
+    margin: 0 auto;
+    gap: 6px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.display {
+    flex: 1 1 auto;
+    border: 2px solid black;
+    height: 100px;
+    width: 450px;
+    
+    background-color: rgb(78, 78, 78);
+}
+
+#display-text {
+    color: white;
+    font-size: large;
+}
+
+.button-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+}
+
+.input-buttons {
+    display: flex;
+    flex: 1;
+    border: 1px solid black;
+
+}
