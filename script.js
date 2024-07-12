@@ -50,7 +50,10 @@ function processInput (input){
         currentInput[position] = unit;
 
     };
-    let clearInput = () => currentInput = [];
+    let clearInput = () => {
+        currentInput = [];
+        updateDisplay();
+    };
     let updateDisplay = () => {
         const output = currentInput.join(' ');
         displayText.textContent = output;
@@ -64,17 +67,36 @@ function processInput (input){
             }
         }
     
-    // if the user clicks AC, empty the list
-    if(input == 'AC'){
+    // edge case handling
+    switch (input){
+        case 'AC':
             clearInput();
+            break
+        case '%':
+            if(getLastInputType() == 'number'){
+                convertToPerecent(currentInput[getLastInputIndex()])
+                updateDisplay();
+                return;
+            }
+            return;
+        case '+/-':
+            if(getLastInputType() == 'number'){
+                if(currentInput[getLastInputIndex()] > 0){
+                    currentInput[getLastInputIndex()] = 
+                    '-' + currentInput[getLastInputIndex()];
+                    updateDisplay()
+                    return;
+                }
+                else if (currentInput[getLastInputIndex()] < 0){
+                    currentInput[getLastInputIndex()] = currentInput[getLastInputIndex()].slice(1); 
+                    console.log(currentInput[getLastInputIndex()])
+                    updateDisplay()
+                    return;
+                }
+            }
+            return;
     }
-    else if (input == '%'){
-        if(getLastInputType() == 'number'){
-            convertToPerecent(currentInput[getLastInputIndex()])
-            updateDisplay();
-            return
-        }
-    } 
+
     // adding input to array based on current length of array
     switch(currentInput.length){
         case 0:
