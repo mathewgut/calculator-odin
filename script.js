@@ -22,7 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-function operate(numOne, operation, numTwo){}
+function operate(numOne, operation, numTwo){
+
+}
 function isOperator(inputString){
     if (isNaN(inputString)){
         if(operators.indexOf(inputString) !== -1){
@@ -33,7 +35,11 @@ function isOperator(inputString){
 };
 
 function processInput (input){
-    
+    let convertToPerecent = num => {
+        console.log(num)
+        const percent = num/100;
+        currentInput[getLastInputIndex()] = percent; 
+    };
     let combineNum = (num, position) => {
         currentInput[position] = currentInput[position] + num;
         console.log('combined', currentInput[position]);
@@ -44,7 +50,7 @@ function processInput (input){
         currentInput[position] = unit;
 
     };
-    let clearInput = () => {currentInput = []};
+    let clearInput = () => currentInput = [];
     let updateDisplay = () => {
         const output = currentInput.join(' ');
         displayText.textContent = output;
@@ -62,6 +68,13 @@ function processInput (input){
     if(input == 'AC'){
             clearInput();
     }
+    else if (input == '%'){
+        if(getLastInputType() == 'number'){
+            convertToPerecent(currentInput[getLastInputIndex()])
+            updateDisplay();
+            return
+        }
+    } 
     // adding input to array based on current length of array
     switch(currentInput.length){
         case 0:
