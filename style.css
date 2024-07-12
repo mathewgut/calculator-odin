@@ -9,13 +9,13 @@ body {
     max-height: 700px;
     max-width: 450px;
     min-width: fit-content;
-    border: 2px solid black;
+    border: 2px solid rgb(255, 255, 255);
     margin: 0 auto;
-    gap: 6px;
-    padding: 12px;
+    gap: 12px;
+    padding: 18px;
     justify-content: center;
     align-items: center;
-    background-color: grey;
+    background-color: rgb(43, 32, 48);
 }
 
 .display {
@@ -38,7 +38,7 @@ body {
     display: flex;
     flex: 0 1 auto;
     flex-direction: column;
-
+    border: 1px solid white;
 }
 
 .row {
@@ -59,4 +59,7 @@ body {
 
 .operator-button {
     background-color:rgba(26, 26, 112, 0.699);
+}
+.number-button{
+    background-color: rgb(67, 36, 102);
 }
