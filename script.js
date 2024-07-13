@@ -20,10 +20,35 @@ document.addEventListener("DOMContentLoaded", () => {
     setButtonValues();
   });
 
+const add = (numOne, numTwo) => numOne + numTwo;
 
+const subtract = (numOne, numTwo) => numOne - numTwo;
+
+const multiply = (numOne, numTwo) => numOne * numTwo;
+
+const divide = (numOne, numTwo) => numOne / numTwo;
+
+function updateDisplay () {
+    if (updateDisplay.arguments[0]){
+        displayText.content = updateDisplay.arguments[0];
+    }
+    const output = currentInput.join(' ');
+    displayText.textContent = output;
+};
 
 function operate(numOne, operation, numTwo){
-
+    switch(operation){
+        case '+':
+            return add(numOne, numTwo);
+        case '-':
+            return subtract(numOne, numTwo);
+        case '/':
+            return divide(numOne, numTwo);
+        case '*':
+            return multiply(numOne, numTwo);
+        default:
+            return '0';
+    }
 }
 function isOperator(inputString){
     if (isNaN(inputString)){
@@ -34,6 +59,11 @@ function isOperator(inputString){
     return false
 };
 
+if(NaN in currentInput){
+    clearInput();
+}
+// should make this an object and the functions should be of an object
+// not just randomly inside another function
 function processInput (input){
     let convertToPerecent = num => {
         console.log(num)
@@ -54,10 +84,7 @@ function processInput (input){
         currentInput = [];
         updateDisplay();
     };
-    let updateDisplay = () => {
-        const output = currentInput.join(' ');
-        displayText.textContent = output;
-    };
+    
     let getLastInputIndex = () => currentInput.length-1;
     let getLastInputType = (unit) => {
         if (isOperator(currentInput[currentInput.length-1])){
@@ -95,8 +122,13 @@ function processInput (input){
                 }
             }
             return;
+        case '=':
+            if(currentInput.length < 3){
+                return 
+            }
+            break
     }
-
+    let sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
     // adding input to array based on current length of array
     switch(currentInput.length){
         case 0:
@@ -142,12 +174,17 @@ function processInput (input){
             }
         case 3:
             if(input == '='){
-                operate();
+                operate(currentInput[0],currentInput[1],currentInput[2]);
+                currentInput = [sum];
                 break;
             }
             else if (isOperator(input)){
-                operate();
-                currentInput.push(input);
+                if (sum == '0'){
+                    clearInput();
+                    return;
+                }
+                currentInput = [sum];
+                currentInput.push(input)
                 break;
             }else{
                 combineNum(input, getLastInputIndex());
