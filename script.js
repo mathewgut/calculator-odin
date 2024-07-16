@@ -89,7 +89,7 @@ if(NaN in currentInput){
     clearInput();
 }
 
-const sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
+
 
 // should make this an object and the functions should be of an object
 // not just randomly inside another function
@@ -128,7 +128,7 @@ function processInput (input){
             }
             break
     }
-    
+    let sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
     // adding input to array based on current length of array
     switch(currentInput.length){
         case 0:
