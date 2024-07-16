@@ -14,19 +14,45 @@ displayText.setAttribute('id','display-text');
 buttonContainer.setAttribute('class','button-container');
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
     createButtonGrid();
     setButtonValues();
   });
 
 const add = (numOne, numTwo) => numOne + numTwo;
-
 const subtract = (numOne, numTwo) => numOne - numTwo;
-
 const multiply = (numOne, numTwo) => numOne * numTwo;
-
 const divide = (numOne, numTwo) => numOne / numTwo;
+
+const convertToPerecent = num => {
+    console.log(num)
+    const percent = num/100;
+    currentInput[getLastInputIndex()] = percent; 
+};
+
+const combineNum = (num, position) => {
+    currentInput[position] = currentInput[position] + num;
+    console.log('combined', currentInput[position]);
+};
+const swapOperator = (unit, position) => {
+    console.log('unit', unit, 'position', position, 
+        'current value', currentInput[position]);
+    currentInput[position] = unit;
+
+};
+const clearInput = () => {
+    currentInput = [];
+    updateDisplay();
+};
+
+const getLastInputIndex = () => currentInput.length-1;
+const getLastInputType = () => {
+    if (isOperator(currentInput[currentInput.length-1])){
+        return 'operator';
+    }else {
+        return 'number';
+        }
+    }
 
 function updateDisplay () {
     if (updateDisplay.arguments[0]){
@@ -62,38 +88,12 @@ function isOperator(inputString){
 if(NaN in currentInput){
     clearInput();
 }
+
+const sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
+
 // should make this an object and the functions should be of an object
 // not just randomly inside another function
 function processInput (input){
-    let convertToPerecent = num => {
-        console.log(num)
-        const percent = num/100;
-        currentInput[getLastInputIndex()] = percent; 
-    };
-    let combineNum = (num, position) => {
-        currentInput[position] = currentInput[position] + num;
-        console.log('combined', currentInput[position]);
-    };
-    let swapOperator = (unit, position) => {
-        console.log('unit', unit, 'position', position, 
-            'current value', currentInput[position]);
-        currentInput[position] = unit;
-
-    };
-    let clearInput = () => {
-        currentInput = [];
-        updateDisplay();
-    };
-    
-    let getLastInputIndex = () => currentInput.length-1;
-    let getLastInputType = (unit) => {
-        if (isOperator(currentInput[currentInput.length-1])){
-            return 'operator';
-        }else {
-            return 'number';
-            }
-        }
-    
     // edge case handling
     switch (input){
         case 'AC':
@@ -128,7 +128,7 @@ function processInput (input){
             }
             break
     }
-    let sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
+    
     // adding input to array based on current length of array
     switch(currentInput.length){
         case 0:
@@ -174,12 +174,15 @@ function processInput (input){
             }
         case 3:
             if(input == '='){
-                operate(currentInput[0],currentInput[1],currentInput[2]);
+                if (sum == '0' || sum == NaN){
+                    clearInput();
+                    return;
+                }
                 currentInput = [sum];
                 break;
             }
             else if (isOperator(input)){
-                if (sum == '0'){
+                if (sum == '0' || sum == NaN){
                     clearInput();
                     return;
                 }
@@ -202,7 +205,6 @@ function setButtonValues(){
     
     const buttonID = ['input-0-0', 'input-1-0', 'input-2-0','input-3-0',
         'input-3-1','input-3-2','input-3-3','input-3-4'];
-
     const numberValues = ['0','0','.','1','2','3','4','5','6','7','8','9'];
     const numberButtonID = ['input-0-4','input-1-4','input-2-4','input-0-3',
         'input-1-3','input-2-3','input-0-2','input-1-2','input-2-2','input-0-1','input-1-1','input-2-1'];
