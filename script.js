@@ -89,12 +89,7 @@ if(NaN in currentInput){
     clearInput();
 }
 
-
-
-// should make this an object and the functions should be of an object
-// not just randomly inside another function
-function processInput (input){
-    // edge case handling
+function operatorInput (input){
     switch (input){
         case 'AC':
             clearInput();
@@ -124,18 +119,30 @@ function processInput (input){
             return;
         case '=':
             if(currentInput.length < 3){
-                return 
+                return 'invalid'
             }
             break
+        case '.':
+            if(getLastInputType() == 'number') {
+                if(String(currentInput[getLastInputIndex()]).includes('.')){
+                    return 'invalid'
+                }
+            }
+            break    
+        
     }
+}
+
+// should make this an object and the functions should be of an object
+// not just randomly inside another function
+function processInput (input){
+
     let sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
     // adding input to array based on current length of array
     switch(currentInput.length){
         case 0:
             // do nothing if operator, add if num
             if (isOperator(input)){
-                console.log('operator at 0 length');
-                console.log(currentInput);
                 break;
             }
             else {
@@ -224,8 +231,8 @@ function setButtonValues(){
     }
 }
 
-// creates the grid of divs we use as buttons and assigns them each
-// an id associated with their x and y value for easier targeting
+// creates the grid of buttons and assigns them each
+// an id associated with their x and y value for more logical targeting
 // input-x-y
 
 function createButtonGrid(){
@@ -258,6 +265,10 @@ function createButtonGrid(){
 buttonContainer.addEventListener('click', (e) => {
     const target = e.target;
     console.log(target.textContent)
+    // in case user enters invalid use of operator
+    if(operatorInput(target.textContent) == 'invalid'){
+        return
+    };
     processInput(target.textContent);
 })
 
