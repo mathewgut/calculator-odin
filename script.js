@@ -86,6 +86,10 @@ if(NaN in currentInput){
     clearInput();
 }
 
+// we return invalid to note that the value cannot be used as an input
+// preventing issues like percentage being an operator, or = being
+// in index 1 of currentInput
+
 function operatorInput (input){
     switch (input){
         case 'AC':
@@ -94,7 +98,7 @@ function operatorInput (input){
         case '%':
             if(getLastInputType() == 'number'){
                 convertToPerecent(currentInput[getLastInputIndex()])
-                return;
+                return 'invalid';
             }
             return;
         case '+/-':
@@ -102,12 +106,12 @@ function operatorInput (input){
                 if(currentInput[getLastInputIndex()] > 0){
                     currentInput[getLastInputIndex()] = 
                     '-' + currentInput[getLastInputIndex()];
-                    return;
+                    return 'invalid';
                 }
                 else if (currentInput[getLastInputIndex()] < 0){
                     currentInput[getLastInputIndex()] = currentInput[getLastInputIndex()].slice(1); 
                     console.log(currentInput[getLastInputIndex()])
-                    return;
+                    return 'invalid';
                 }
             }
             return;
@@ -130,7 +134,9 @@ function operatorInput (input){
 // should make this an object and the functions should be of an object
 // not just randomly inside another function
 function processInput (input){
-
+    if(operatorInput(input) == 'invalid'){
+        return
+    };
     let sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
     // adding input to array based on current length of array
     switch(currentInput.length){
@@ -259,9 +265,6 @@ buttonContainer.addEventListener('click', (e) => {
     const target = e.target;
     console.log(target.textContent)
     // in case user enters invalid use of operator
-    if(operatorInput(target.textContent) == 'invalid'){
-        return
-    };
     processInput(target.textContent);
     updateDisplay()
 })
