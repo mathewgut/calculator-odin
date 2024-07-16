@@ -32,6 +32,7 @@ body {
     color: white;
     font-size: 32px;
     padding: 12px;
+    overflow: hidden;
 }
 
 .button-container {

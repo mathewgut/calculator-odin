@@ -3,16 +3,14 @@ const display = document.createElement('div');
 const displayText = document.createElement('p');
 const buttonContainer = document.createElement('div');
 
-const operators = ['AC','+/-','%','/','*','-','+','='];
-let currentInput = []
-
-
 display.setAttribute('class','display');
 display.setAttribute('id','screen');
 container.setAttribute('class','container');
 displayText.setAttribute('id','display-text');
 buttonContainer.setAttribute('class','button-container');
 
+const operators = ['AC','+/-','%','/','*','-','+','='];
+let currentInput = []
 
 document.addEventListener("DOMContentLoaded", () => {
     createButtonGrid();
@@ -42,7 +40,6 @@ const swapOperator = (unit, position) => {
 };
 const clearInput = () => {
     currentInput = [];
-    updateDisplay();
 };
 
 const getLastInputIndex = () => currentInput.length-1;
@@ -97,7 +94,6 @@ function operatorInput (input){
         case '%':
             if(getLastInputType() == 'number'){
                 convertToPerecent(currentInput[getLastInputIndex()])
-                updateDisplay();
                 return;
             }
             return;
@@ -106,13 +102,11 @@ function operatorInput (input){
                 if(currentInput[getLastInputIndex()] > 0){
                     currentInput[getLastInputIndex()] = 
                     '-' + currentInput[getLastInputIndex()];
-                    updateDisplay()
                     return;
                 }
                 else if (currentInput[getLastInputIndex()] < 0){
                     currentInput[getLastInputIndex()] = currentInput[getLastInputIndex()].slice(1); 
                     console.log(currentInput[getLastInputIndex()])
-                    updateDisplay()
                     return;
                 }
             }
@@ -202,7 +196,6 @@ function processInput (input){
             }
     }
 
-    updateDisplay();
 }
 
 // sets button textcontent based on button id's so it can be used as input
@@ -270,6 +263,7 @@ buttonContainer.addEventListener('click', (e) => {
         return
     };
     processInput(target.textContent);
+    updateDisplay()
 })
 
 
