@@ -58,7 +58,7 @@ function updateDisplay () {
     if (updateDisplay.arguments[0]){
         displayText.content = updateDisplay.arguments[0];
     }
-    const output = currentInput.join(' ');
+    const output = currentInput.join('');
     displayText.textContent = output;
 };
 
@@ -145,7 +145,7 @@ function processInput (input){
                 break;
             }
         case 1:
-            if (isOperator(input)){ // if an operator
+            if (isOperator(input)){
                 if(getLastInputType(input, getLastInputIndex()) == 'number');
                     currentInput.push(input);
                     console.log(currentInput);
@@ -202,10 +202,12 @@ function processInput (input){
 // for math operations
 
 function setButtonValues(){
-    
+    // id's of buttons to which operators will be assigned
     const buttonID = ['input-0-0', 'input-1-0', 'input-2-0','input-3-0',
         'input-3-1','input-3-2','input-3-3','input-3-4'];
+    // values for number buttons
     const numberValues = ['0','0','.','1','2','3','4','5','6','7','8','9'];
+    // ids of number buttons to assign values to
     const numberButtonID = ['input-0-4','input-1-4','input-2-4','input-0-3',
         'input-1-3','input-2-3','input-0-2','input-1-2','input-2-2','input-0-1','input-1-1','input-2-1'];
 
@@ -227,8 +229,8 @@ function setButtonValues(){
 // input-x-y
 
 function createButtonGrid(){
-    const totalHeight = 500;
-    const totalWidth = 450;
+    const totalHeight = 400;
+    const totalWidth = 300;
 
     for(let rows = 0; rows < 5; rows++){
         const row = document.createElement('div');
@@ -237,7 +239,7 @@ function createButtonGrid(){
         row.setAttribute('class','row');
 
         for(let inputs = 0; inputs < 4; inputs++){
-            const input = document.createElement('div');
+            const input = document.createElement('button');
 
             input.setAttribute('id',`input-${inputs}-${rows}`)
             input.setAttribute('class','input-buttons');
