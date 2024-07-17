@@ -22,8 +22,15 @@ const subtract = (numOne, numTwo) => numOne - numTwo;
 const multiply = (numOne, numTwo) => numOne * numTwo;
 const divide = (numOne, numTwo) => numOne / numTwo;
 
+const roundHundredth = num => {
+    if (num.length > 14 || String(num).slice(String(num).indexOf('.')).length > 3){
+        console.log('rounded: ', Number(num).toFixed(3))
+        return Number(num).toFixed(3);
+    }
+    return num;
+}
+
 const convertToPerecent = num => {
-    console.log(num)
     const percent = num/100;
     currentInput[getLastInputIndex()] = percent; 
 };
@@ -53,7 +60,8 @@ const getLastInputType = () => {
 
 function updateDisplay () {
     if (updateDisplay.arguments[0]){
-        displayText.content = updateDisplay.arguments[0];
+        console.log('update display custom value: ', arguments[0])
+        displayText.content = arguments[0];
     }
     const output = currentInput.join('');
     displayText.textContent = output;
@@ -137,7 +145,8 @@ function processInput (input){
     if(operatorInput(input) == 'invalid'){
         return
     };
-    let sum = operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2]));
+    let sum = roundHundredth(operate(Number(currentInput[0]),currentInput[1],Number(currentInput[2])));
+    console.log('sum is', sum)
     // adding input to array based on current length of array
     switch(currentInput.length){
         case 0:
